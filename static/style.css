@@ -1,18 +1,21 @@
 /* Updated CSS for browser compatibility */
 
-/* Replace -webkit-text-size-adjust with text-size-adjust */
-text-size-adjust: 100%;
+:root {
+  /* Replace -webkit-text-size-adjust with text-size-adjust */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* Replace color-adjust with print-color-adjust */
+  -webkit-print-color-adjust: exact; /* Added vendor prefix for compatibility */
+  print-color-adjust: exact;
+}
 
 /* Add match-parent for Safari support */
-text-align: -webkit-match-parent;
-text-align: match-parent;
-
-/* Replace color-adjust with print-color-adjust */
-print-color-adjust: exact;
-
-/* Ensure correct property order */
-text-align: -webkit-match-parent;
-text-align: inherit;
+body {
+  text-align: -webkit-match-parent;
+  text-align: match-parent;
+  text-align: inherit;
+}
 
 body {
   background: linear-gradient(135deg, #f4f4f9, #e9ecef); /* Gradient background */
