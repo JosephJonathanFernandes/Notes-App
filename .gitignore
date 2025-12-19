@@ -1,4 +1,43 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
 
-Scripts
-lib
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test and coverage
+.pytest_cache/
+.tox/
+.coverage
+coverage.xml
+htmlcov/
+
+# Build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Misc
+*.sqlite3
+*.db
