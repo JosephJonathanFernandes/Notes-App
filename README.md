@@ -167,6 +167,24 @@ uvicorn index:app --reload --port 8000
 }
 ```
 
+## Testing
+
+To run tests, use the following command:
+```bash
+pytest
+```
+Ensure all tests pass before making changes.
+
+## Deployment
+
+To deploy the app to production:
+1. Set up a production MongoDB instance.
+2. Configure the `.env` file with production settings.
+3. Use a production server like `gunicorn` or `uvicorn`:
+   ```bash
+   uvicorn index:app --host 0.0.0.0 --port 80
+   ```
+
 ## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:

@@ -1,1 +1,177 @@
-css
+/* Updated CSS for browser compatibility */
+
+/* Replace -webkit-text-size-adjust with text-size-adjust */
+text-size-adjust: 100%;
+
+/* Add match-parent for Safari support */
+text-align: -webkit-match-parent;
+text-align: match-parent;
+
+/* Replace color-adjust with print-color-adjust */
+print-color-adjust: exact;
+
+/* Ensure correct property order */
+text-align: -webkit-match-parent;
+text-align: inherit;
+
+body {
+  background: linear-gradient(135deg, #f4f4f9, #e9ecef); /* Gradient background */
+  color: #333; /* Dark gray for better readability */
+  font-family: 'Roboto', sans-serif; /* Modern and clean font */
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #007bff; /* Vibrant blue for a professional look */
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Navbar shadow */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  color: white;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #ffdd57; /* Bright yellow for hover effect */
+}
+
+.note-item {
+  background: #ffffff;
+  border-left: 5px solid #007bff; /* Accent color */
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+.note-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.important-badge {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #b02a37;
+}
+
+.notes-container {
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.form-container {
+  background: #ffffff; /* White for contrast */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Form heading */
+.form-container h2 {
+  color: #007bff;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Notes list heading */
+.notes-list h2 {
+  color: #007bff;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Alert styling */
+.alert {
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 15px;
+}
+
+/* Add animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer styling */
+footer {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+  color: #ffdd57;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

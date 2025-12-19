@@ -36,7 +36,7 @@ class Note(BaseModel):
         return v
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "title": "Sample Note",
                 "description": "This is a sample note description",

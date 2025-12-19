@@ -12,27 +12,33 @@ import sys
 import subprocess
 import shutil
 from pathlib import Path
+import logging
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def run_command(command, description):
     """Run a shell command and handle errors."""
-    print(f"🔧 {description}...")
+    logger.info(f"🔧 {description}...")
     try:
         result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
-        print(f"✅ {description} completed successfully")
+        logger.info(f"✅ {description} completed successfully")
         return result
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error during {description}: {e}")
-        print(f"Error output: {e.stderr}")
+        logger.error(f"❌ Error during {description}: {e}")
+        logger.error(f"Error output: {e.stderr}")
         return None
 
 
 def check_python_version():
     """Check if Python version is compatible."""
     if sys.version_info < (3, 8):
-        print("❌ Python 3.8 or higher is required")
+        logger.error("❌ Python 3.8 or higher is required")
         sys.exit(1)
-    print(f"✅ Python version: {sys.version}")
+    logger.info(f"✅ Python version: {sys.version}")
 
 
 def check_mongodb():
@@ -41,18 +47,18 @@ def check_mongodb():
         import pymongo
         client = pymongo.MongoClient("mongodb://localhost:27017/", serverSelectionTimeoutMS=5000)
         client.admin.command('ping')
-        print("✅ MongoDB is running and accessible")
+        logger.info("✅ MongoDB is running and accessible")
         return True
     except Exception as e:
-        print(f"⚠️  MongoDB check failed: {e}")
-        print("   Please ensure MongoDB is installed and running on localhost:27017")
+        logger.warning(f"⚠️  MongoDB check failed: {e}")
+        logger.info("   Please ensure MongoDB is installed and running on localhost:27017")
         return False
 
 
 def create_virtual_environment():
     """Create a Python virtual environment."""
     if os.path.exists("venv"):
-        print("ℹ️  Virtual environment already exists")
+        logger.info("ℹ️  Virtual environment already exists")
         return True
 
     return run_command("python -m venv venv", "Creating virtual environment") is not None
@@ -77,6 +83,10 @@ def install_dependencies():
                 "Upgrading pip")
 
     # Install dependencies
+    if not os.path.exists("requirements.txt"):
+        logger.error("requirements.txt file is missing. Please add it to the project root.")
+        return False
+
     result = run_command(f'"{python_exe}" -m pip install -r requirements.txt',
                         "Installing dependencies")
     return result is not None
@@ -85,16 +95,16 @@ def install_dependencies():
 def create_env_file():
     """Create .env file from .env.example if it doesn't exist."""
     if os.path.exists(".env"):
-        print("ℹ️  .env file already exists")
+        logger.info("ℹ️  .env file already exists")
         return True
 
     if os.path.exists(".env.example"):
         shutil.copy(".env.example", ".env")
-        print("✅ Created .env file from .env.example")
-        print("   Please edit .env file with your configuration")
+        logger.info("✅ Created .env file from .env.example")
+        logger.info("   Please edit .env file with your configuration")
         return True
     else:
-        print("⚠️  .env.example not found")
+        logger.warning("⚠️  .env.example not found")
         return False
 
 
@@ -102,7 +112,7 @@ def run_initial_setup():
     """Run initial database setup if needed."""
     python_exe = activate_virtual_environment()
 
-    print("🔧 Running initial setup...")
+    logger.info("🔧 Running initial setup...")
     try:
         result = subprocess.run([python_exe, "-c", """
 import os
@@ -113,18 +123,18 @@ load_dotenv()
 db_name = os.getenv('DATABASE_NAME', 'notes')
 print(f"Database '{db_name}' is ready for use")
 """], capture_output=True, text=True, check=True)
-        print("✅ Database connection verified")
+        logger.info("✅ Database connection verified")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Database setup failed: {e}")
-        print(f"Error output: {e.stderr}")
+        logger.error(f"❌ Database setup failed: {e}")
+        logger.error(f"Error output: {e.stderr}")
         return False
 
 
 def main():
     """Main setup function."""
-    print("🚀 Setting up Notes App development environment")
-    print("=" * 50)
+    logger.info("🚀 Setting up Notes App development environment")
+    logger.info("=" * 50)
 
     # Check Python version
     check_python_version()
@@ -147,18 +157,18 @@ def main():
     if mongodb_ok:
         run_initial_setup()
 
-    print("\n" + "=" * 50)
-    print("🎉 Setup completed!")
-    print("\nTo activate the virtual environment:")
+    logger.info("\n" + "=" * 50)
+    logger.info("🎉 Setup completed!")
+    logger.info("\nTo activate the virtual environment:")
     if os.name == 'nt':
-        print("   venv\\Scripts\\activate")
+        logger.info("   venv\\Scripts\\activate")
     else:
-        print("   source venv/bin/activate")
-    print("\nTo run the application:")
-    print("   python index.py")
-    print("   or")
-    print("   uvicorn index:app --reload")
-    print("\nFor more information, see README.md")
+        logger.info("   source venv/bin/activate")
+    logger.info("\nTo run the application:")
+    logger.info("   python index.py")
+    logger.info("   or")
+    logger.info("   uvicorn index:app --reload")
+    logger.info("\nFor more information, see README.md")
 
 
 if __name__ == "__main__":

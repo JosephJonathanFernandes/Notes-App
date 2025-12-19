@@ -57,7 +57,17 @@ Before submitting a PR:
 - Verify MongoDB operations work correctly
 - Check that the UI displays properly
 
+### Running Tests
+
+Before submitting a pull request, ensure all tests pass:
+```bash
+pytest
+```
+Add new tests for any new features or bug fixes.
+
 ## Code of Conduct
+
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a welcoming environment for all contributors.
 
 - Be respectful and inclusive
 - Welcome newcomers

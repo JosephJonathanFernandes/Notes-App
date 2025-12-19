@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from contextlib import asynccontextmanager
 
 from routes.note import note
 
@@ -18,12 +19,21 @@ load_dotenv()
 APP_NAME = os.getenv("APP_NAME", "Notes App")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan event handler for startup and shutdown."""
+    print(f"🚀 {APP_NAME} is starting up...")
+    print(f"📝 Debug mode: {DEBUG}")
+    yield
+    print(f"👋 {APP_NAME} is shutting down...")
+
 # Create FastAPI application
 app = FastAPI(
     title=APP_NAME,
     description="A modern notes application with FastAPI and MongoDB",
     version="1.0.0",
-    debug=DEBUG
+    debug=DEBUG,
+    lifespan=lifespan
 )
 
 # Add CORS middleware (configure according to your needs)
@@ -40,19 +50,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Include routers
 app.include_router(note)
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Application startup event handler."""
-    print(f"🚀 {APP_NAME} is starting up...")
-    print(f"📝 Debug mode: {DEBUG}")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Application shutdown event handler."""
-    print(f"👋 {APP_NAME} is shutting down...")
 
 
 if __name__ == "__main__":
